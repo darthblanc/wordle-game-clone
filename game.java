@@ -12,12 +12,13 @@ public class game {
     }
 
     private String get_random_word() throws FileNotFoundException {
-        Scanner file_scan = new Scanner(new File("...\\wordle.txt"));
+        Scanner file_scan = new Scanner(new File("wordle.txt"));
 
         while (file_scan.hasNextLine()){
             word_bank.add(file_scan.nextLine());
         }
 
+        file_scan.close();
         int random = new Random().nextInt(word_bank.size());
         return word_bank.get(random);
     }
@@ -49,6 +50,7 @@ public class game {
         if (scanner.next().equals("Y")){
             intro();
         }
+        scanner.close();
         System.out.println("It's game time... Goodluck!");
         if (play_game(1)){
             System.out.println("Congratulations, Make sure to share your progress with friends");
@@ -65,7 +67,7 @@ public class game {
         System.out.print("Enter a word: ");
         Scanner scan = new Scanner(System.in);
         String guess = scan.next();
-
+        scan.close();
         if (guess.length() != 5){
             System.out.println("Improper length");
             return play_game(tries);
@@ -88,6 +90,7 @@ public class game {
                 solver solver1 = new solver(word_correctness, word_bank);
                 word_bank = solver1.solve();
             }
+            response.close();
             return play_game(tries + 1);
         }
     }
